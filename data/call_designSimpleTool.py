@@ -2,30 +2,32 @@ import os
 import subprocess
 import sys
 import re
+import csv
 
 import pyperclip3
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSlot, QThread, pyqtSignal
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog
+from PyQt5.QtGui import QBrush, QColor
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog, QTableWidgetItem, QAbstractItemView
 from ui_designSimpleTool import Ui_Dialog
 
 global PathList, GMCode
-PathList = {}
+# PathList = {}
 GMCode = {}
 
 
-def initConfig():
-    configFile = open('setting.conf', 'r', encoding='utf-8', )
-    for line in configFile:
-        if line == "" or line == "\n":
-            continue
-        temp = line.split(":", 1)
-        PathList.update({temp[0]: temp[1].replace("\n", "")})
-    configFile.close()
+# def initConfig():
+#     configFile = open('config/setting.conf', 'r', encoding='utf-8', )
+#     for line in configFile:
+#         if line == "" or line == "\n":
+#             continue
+#         temp = line.split(":", 1)
+#         PathList.update({temp[0]: temp[1].replace("\n", "")})
+#     configFile.close()
 
 
 def initGMCode():
-    GMCodeFile = open('gmcode.txt', 'r', encoding='utf-8')
+    GMCodeFile = open('config/gmcode.txt', 'r', encoding='utf-8')
     for line in GMCodeFile:
         temp = line.split(":", 1)
         GMCode.update({temp[0]: temp[1].replace("\n", "")})
@@ -35,104 +37,70 @@ def initGMCode():
 class HomePageWindow(QMainWindow, Ui_Dialog):
     def __init__(self, parent=None):
         super(HomePageWindow, self).__init__(parent)
-        self.setupUi(self)
-        initConfig()
-        initGMCode()
-        self.initUI()
+        self.setupUi(self)  # 装载UI
+        # initConfig()    # 初始化按钮配置
+        initGMCode()    # 初始化GM搜索
+        self.initUI()   # 初始化UI事件
 
     def initUI(self):
-        self.btn_openUnityHub.clicked.connect(lambda: self.onRunFileOrFolder('UnityHub', 1))
-        self.btn_openBeyondCompare.released.connect(lambda: self.onRunFileOrFolder('BeyondCompare', 1))
-        self.btn_openDesignFolder.released.connect(lambda: self.onRunFileOrFolder('DesignFolder', 2))
-        self.btn_openExcelTableFolder.released.connect(lambda: self.onRunFileOrFolder('DataXLSFolder', 2))
-        self.btn_openExcelDataFolder.released.connect(lambda: self.onRunFileOrFolder('DataCSVFolder', 2))
-        self.btn_openOnedriveFolder.released.connect(lambda: self.onRunFileOrFolder('OnedriveFolder', 2))
-        self.btn_runSelfServer.released.connect(lambda: self.onRunBat('RunServerBat'))
-        self.btn_openSelfServerFolder.released.connect(lambda: self.onRunFileOrFolder('ServerFolder', 2))
-        self.btn_openProjectFolder.released.connect(lambda: self.onRunFileOrFolder('ProjectFolder', 2))
+
         self.btn_submitToSearch.clicked.connect(self.onSearchKeyClicked)
         self.le_consoleCodeSearch.textChanged.connect(self.onGMCodeSearch)
         self.btn_consoleCodeCopy.clicked.connect(self.onGMCodeCopy)
         self.cb_topThisWindow.toggled.connect(self.onTopThisWindowClicked)
-        self.btn_updataData.clicked.connect(self.onUpdataDataclicked)
-        self.btn_updataDesignFolder.clicked.connect(self.onUpdataDesignFolderclicked)
-        self.btn_updataProjectFolder.clicked.connect(self.onUpdataProjectFolderclicked)
-        self.btn_commitData.clicked.connect(self.onCommitDataclicked)
-        self.btn_commitDesignFolder.clicked.connect(self.onCommitDesignFolderclicked)
-        self.btn_commitProjectFolder.clicked.connect(self.onCommitProjectFolderclicked)
-        self.btn_pathSetting.clicked.connect(self.onPathSettingClick)
 
+        self.btn_pathSetting.clicked.connect(self.onPathSettingClick)
+        self.btn_quickJumpReload.clicked.connect(self.onQuickJumpReloadClick)
+        self.btn_quickJump.clicked.connect(self.onQuickJumpClick)
+
+        self.tw_jumpListTable.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.tw_jumpListTable.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.onQuickJumpReloadClick()
+
+        self.btn_svnSubmit.clicked.connect(self.onCommitDataclicked)
+        self.btn_svnUpdata.clicked.connect(self.onUpdataDataclicked)
 
     @pyqtSlot()
-    # 打开程序
-    def onRunFileOrFolder(self, key, rType):
-        # 创建新线程启动文件，避免卡住
-        runPath = ""
+    # 根据选中行打开对应路径下的文件夹/文件
+    def onQuickJumpClick(self):
+        items = self.tw_jumpListTable.selectedItems()
+        if len(items) != 0:
+            self.onRunFileOrFolder(items[1].text())
 
-        # 若配置信息内缺少路径，则弹窗选择文件路径
-        if key not in PathList.keys():
-            runPath = self.relocation(rType)
-            if runPath == "":                   # 用户取消操作，未获取到值的情形
-                return
-            PathList[key] = runPath
-            self.writeToSetting()   # 写入配置文件
-            initConfig()       # 重载配置
+    @pyqtSlot()
+    # 刷新加载快速跳转列表
+    def onQuickJumpReloadClick(self):
+        JumpListFile = open('config/dirlist.csv', 'r')
+        read = csv.reader(JumpListFile)
+        read_row = len(list(read))
+        JumpListFile.seek(0)
+        self.tw_jumpListTable.setRowCount(read_row)
+        self.tw_jumpListTable.setColumnCount(2)
+        for index_r, valueList in enumerate(read):
+            for index_c, value in enumerate(valueList):
+                qtw_value = QTableWidgetItem(value)
+                self.tw_jumpListTable.setItem(index_r, index_c, qtw_value)
+                # 根据类型上色
+                if index_c == 1:
+                    if os.path.isfile(qtw_value.text()):
+                        self.tw_jumpListTable.item(index_r, 0).setBackground(QBrush(QColor(255, 242, 204)))
+                        self.tw_jumpListTable.item(index_r, 1).setBackground(QBrush(QColor(255, 242, 204)))
+                    elif os.path.isdir(qtw_value.text()):
+                        self.tw_jumpListTable.item(index_r, 0).setBackground(QBrush(QColor(221, 235, 247)))
+                        self.tw_jumpListTable.item(index_r, 1).setBackground(QBrush(QColor(221, 235, 247)))
+                    else:
+                        self.tw_jumpListTable.item(index_r, 0).setForeground(QBrush(QColor(255, 0, 0)))
+                        self.tw_jumpListTable.item(index_r, 1).setForeground(QBrush(QColor(255, 0, 0)))
+
+    # 打开程序/目录
+    def onRunFileOrFolder(self, runPath):
+        if os.path.exists(runPath):
+            # 创建新线程启动文件，避免卡住
+            self.thread = OpenByThread(runPath)
+            self.thread.start()
         else:
-            runPath = PathList[key]
-            # 若配置信息内的路径不存在，则删除该条目，并弹窗选择文件路径
-            if not os.path.exists(runPath):
-                runPath = self.relocation(rType)
-                if runPath == "":  # 用户取消操作，未获取到值的情形
-                    return
-                PathList[key] = runPath
-                self.writeToSetting()   # 写入配置文件
-                initConfig()       # 重载配置
-        self.thread = OpenByThread(runPath)
-        self.thread.start()
-
-    # 路径验证后返回
-    def pathCheckAndReturn(self, key, rType):
-        # 若配置信息内缺少路径，则弹窗选择文件路径
-        runPath = ""
-        if key not in PathList.keys():
-            runPath = self.relocation(rType)
-            if runPath == "":                   # 用户取消操作，未获取到值的情形
-                return
-            PathList[key] = runPath
-            self.writeToSetting()   # 写入配置文件
-            initConfig()       # 重载配置
-        else:
-            runPath = PathList[key]
-            # 若配置信息内的路径不存在，则删除该条目，并弹窗选择文件路径
-            if not os.path.exists(runPath):
-                runPath = self.relocation(rType)
-                if runPath == "":  # 用户取消操作，未获取到值的情形
-                    return
-                PathList[key] = runPath
-                self.writeToSetting()   # 写入配置文件
-                initConfig()       # 重载配置
-        return runPath
-
-    # 文件/文件夹路径重定位
-    def relocation(self, relocationType):       # 1->文件 2->文件夹
-        if relocationType == 1:
-            get_filePath = QFileDialog.getOpenFileName(self, "选择文件", "./", "可执行程序 (*.exe)")
-            return get_filePath[0]
-        elif relocationType == 2:
-            get_folderPath = QFileDialog.getExistingDirectory(self, "选取文件夹", "./")
-            return get_folderPath
-        elif relocationType == 3:
-            get_batPath = QFileDialog.getOpenFileName(self, "选择文件", "./", "批处理文件 (*.bat)")
-            return get_batPath[0]
-        return ""
-
-    # 将路径信息写入setting.conf
-    def writeToSetting(self):
-        needToWriteText = ""
-        for key in PathList:
-            needToWriteText = needToWriteText + key + ":" + PathList[key] + "\n"
-        configFile = open('setting.conf', 'w', encoding='utf-8')
-        configFile.writelines(needToWriteText)
+            msg_box = QMessageBox(QMessageBox.Warning, "错误提示", "找不到路径下的文件/文件夹")
+            msg_box.exec_()
 
     @pyqtSlot()
     # 启动批处理文件（用于新开cmd窗口启动服务器）
@@ -186,52 +154,31 @@ class HomePageWindow(QMainWindow, Ui_Dialog):
         self.thread.start()
 
     @pyqtSlot()
-    # 更新SVN表格
+    # SVN更新当前选中目录
     def onUpdataDataclicked(self):
-        key_xls = 'DataXLSFolder'
-        key_csv = 'DataCSVFolder'
-        self.SVNUpdataOrCommit(key_xls, 'update')
-        self.SVNUpdataOrCommit(key_csv, 'update')
+        items = self.tw_jumpListTable.selectedItems()
+        if not len(items) == 0:
+            runPath = items[1].text()
+            if os.path.exists(runPath) and os.path.isdir(runPath):
+                self.SVNUpdataOrCommit(runPath, 'update')
+            else:
+                msg_box = QMessageBox(QMessageBox.Warning, "提示", "找不到路径下的文件夹或不是目录，更新失败")
+                msg_box.exec_()
 
     @pyqtSlot()
-    # 提交SVN表格
+    # 提交SVN当前选中目录
     def onCommitDataclicked(self):
-        key_xls = 'DataXLSFolder'
-        key_csv = 'DataCSVFolder'
-        self.SVNUpdataOrCommit(key_xls, 'commit')
-        self.SVNUpdataOrCommit(key_csv, 'commit')
-
-    @pyqtSlot()
-    # 提交SVN策划文件夹
-    def onUpdataDesignFolderclicked(self):
-        key = 'DesignFolder'
-        self.SVNUpdataOrCommit(key, 'update')
-
-    @pyqtSlot()
-    # 提交SVN策划文件夹
-    def onCommitDesignFolderclicked(self):
-        key = 'DesignFolder'
-        self.SVNUpdataOrCommit(key, 'commit')
-
-    # 更新SVN工程文件夹
-    @pyqtSlot()
-    def onUpdataProjectFolderclicked(self):
-        key = 'ProjectFolder'
-        self.SVNUpdataOrCommit(key, 'update')
-
-    @pyqtSlot()
-    # 提交SVN工程文件夹
-    def onCommitProjectFolderclicked(self):
-        key = 'ProjectFolder'
-        self.SVNUpdataOrCommit(key, 'commit')
+        items = self.tw_jumpListTable.selectedItems()
+        if not len(items) == 0:
+            runPath = items[1].text()
+            if os.path.exists(runPath) and os.path.isdir(runPath):
+                self.SVNUpdataOrCommit(runPath, 'commit')
+            else:
+                msg_box = QMessageBox(QMessageBox.Warning, "提示", "找不到路径下的文件夹或不是目录，提交失败")
+                msg_box.exec_()
 
     # SVN更新与提交，根据参数二决定执行类型
-    def SVNUpdataOrCommit(self, key, operateCommand):
-        # 获得并检查路径正确性
-        runPath = self.pathCheckAndReturn(key, 2)
-        # 意外情况终止
-        if runPath == "":
-            return
+    def SVNUpdataOrCommit(self, runPath, operateCommand):
         drive = runPath.split(":", 1)[0]  # 获取盘符
         consoleText_1stPart = '%s: & cd %s & setlocal enabledelayedexpansion' % (drive, runPath)  # 拼接指令
         consoleText_2ndPart = '& TortoiseProc.exe /command:%s /path:"." /closeonend:0' % operateCommand
@@ -240,12 +187,7 @@ class HomePageWindow(QMainWindow, Ui_Dialog):
         self.thread.start()
 
     # Git更新与提交，根据参数二决定执行类型
-    def GitUpdataOrCommit(self, key, operateCommand):
-        # 获得并检查路径正确性
-        runPath = self.pathCheckAndReturn(key, 2)
-        # 意外情况终止
-        if runPath == "":
-            return
+    def GitUpdataOrCommit(self, runPath, operateCommand):
         drive = runPath.split(":", 1)[0]  # 获取盘符
         consoleText_1stPart = '%s: & cd %s & setlocal enabledelayedexpansion' % (drive, runPath)  # 拼接指令
         consoleText_2ndPart = '& TortoiseGitProc.exe /command:%s /path:"."' % operateCommand
@@ -265,7 +207,7 @@ class HomePageWindow(QMainWindow, Ui_Dialog):
     @pyqtSlot()
     # 设置路径(懒得写了就直接开记事本改算逑）
     def onPathSettingClick(self):
-        self.thread = RunCmdByThread("notepad.exe setting.conf")
+        self.thread = OpenByThread('.\config')
         self.thread.start()
 
 # 使用线程启动文件或打开文件夹

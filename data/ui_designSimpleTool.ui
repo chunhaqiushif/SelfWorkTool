@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>270</width>
-    <height>460</height>
+    <height>720</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,13 +22,13 @@
   <property name="minimumSize">
    <size>
     <width>270</width>
-    <height>460</height>
+    <height>720</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>270</width>
-    <height>460</height>
+    <height>720</height>
    </size>
   </property>
   <property name="font">
@@ -46,166 +46,11 @@
   <property name="windowOpacity">
    <double>0.750000000000000</double>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>121</width>
-     <height>261</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="lo_fastOpenTool">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetMinimumSize</enum>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>2</number>
-    </property>
-    <item>
-     <widget class="QPushButton" name="btn_openUnityHub">
-      <property name="text">
-       <string>UnityHub</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_openBeyondCompare">
-      <property name="text">
-       <string>Beyond Compare 4</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_openDesignFolder">
-      <property name="text">
-       <string>策划文件夹</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_openExcelTableFolder">
-      <property name="text">
-       <string>表格文件夹[.xls]</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_openExcelDataFolder">
-      <property name="text">
-       <string>表格文件夹[.csv]</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_openOnedriveFolder">
-      <property name="text">
-       <string>Onedrive文件夹</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_openProjectFolder">
-      <property name="text">
-       <string>项目文件夹</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_runSelfServer">
-      <property name="text">
-       <string>启动个人服务器</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_openSelfServerFolder">
-      <property name="text">
-       <string>个人服务器文件夹</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="verticalLayoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>10</y>
-     <width>125</width>
-     <height>171</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="lo_fastUpdataTool">
-    <property name="leftMargin">
-     <number>2</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="QPushButton" name="btn_updataProjectFolder">
-      <property name="text">
-       <string>更新客户端目录</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_commitProjectFolder">
-      <property name="text">
-       <string>提交客户端目录</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_updataDesignFolder">
-      <property name="text">
-       <string>更新策划目录</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_commitDesignFolder">
-      <property name="font">
-       <font>
-        <family>宋体</family>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string>提交策划目录</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_updataData">
-      <property name="text">
-       <string>更新表格[.xls]</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_commitData">
-      <property name="text">
-       <string>提交表格[.xls|.csv]</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QWidget" name="verticalLayoutWidget_3">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>280</y>
+     <y>10</y>
      <width>251</width>
      <height>51</height>
     </rect>
@@ -231,7 +76,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>410</y>
+     <y>670</y>
      <width>251</width>
      <height>31</height>
     </rect>
@@ -259,7 +104,7 @@
     <item>
      <widget class="QPushButton" name="btn_pathSetting">
       <property name="text">
-       <string>设置路径</string>
+       <string>打开配置文件目录</string>
       </property>
      </widget>
     </item>
@@ -269,13 +114,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>440</y>
+     <y>700</y>
      <width>251</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>By Tupler. Ver 1.0</string>
+    <string>By Tupler. Ver 1.1</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -285,7 +130,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>340</y>
+     <y>70</y>
      <width>251</width>
      <height>61</height>
     </rect>
@@ -333,6 +178,107 @@
        <string>GM指令搜索结果显示在此处...</string>
       </property>
      </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>251</width>
+     <height>521</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="lo_quickJump_v">
+    <item>
+     <widget class="QTableWidget" name="tw_jumpListTable">
+      <property name="showGrid">
+       <bool>true</bool>
+      </property>
+      <property name="rowCount">
+       <number>0</number>
+      </property>
+      <property name="columnCount">
+       <number>2</number>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>80</number>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderDefaultSectionSize">
+       <number>20</number>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>名称</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>路径</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="lo_svnConcoleTable_h">
+      <item>
+       <widget class="QPushButton" name="btn_svnUpdata">
+        <property name="text">
+         <string>SVN目录更新</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_svnSubmit">
+        <property name="text">
+         <string>SVN目录提交</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="lo_quickJumpConcole_h">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="btn_quickJumpReload">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>重载列表</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_quickJump">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>打开</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
