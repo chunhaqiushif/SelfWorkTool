@@ -8,7 +8,7 @@ HTMLParser==0.0.2
 importlib_metadata==4.11.3
 keyring==23.5.0
 lockfile==0.12.2
-lxml==4.6.3
+lxml==4.6.5
 monotonic==1.6
 numpy==1.22.3
 ordereddict==1.1
