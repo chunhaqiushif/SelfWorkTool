@@ -37,4 +37,4 @@ exe = EXE(pyz,
           disable_windowed_traceback=False,
           target_arch=None,
           codesign_identity=None,
-          entitlements_file=None , uac_admin=True, icon='G:\\OneDrive\\WorkTool\\DesignSimpleTool\\data\\dist\\UI\\icon_designSimpleTool.ico', resources=['call_designSimpleTool.py.manifest,1'])
+          entitlements_file=None , uac_admin=True, icon='F:\\DesignSimpleTool\\SelfWorkTool\\data\\dist\\UI\\icon_designSimpleTool.ico')

@@ -83,11 +83,11 @@ class HomePageWindow(QMainWindow, Ui_Dialog):
                 # 根据类型上色
                 if index_c == 1:
                     if os.path.isfile(qtw_value.text()):
-                        self.tw_jumpListTable.item(index_r, 0).setBackground(QBrush(QColor(255, 242, 204)))
-                        self.tw_jumpListTable.item(index_r, 1).setBackground(QBrush(QColor(255, 242, 204)))
-                    elif os.path.isdir(qtw_value.text()):
                         self.tw_jumpListTable.item(index_r, 0).setBackground(QBrush(QColor(221, 235, 247)))
                         self.tw_jumpListTable.item(index_r, 1).setBackground(QBrush(QColor(221, 235, 247)))
+                    elif os.path.isdir(qtw_value.text()):
+                        self.tw_jumpListTable.item(index_r, 0).setBackground(QBrush(QColor(255, 242, 204)))
+                        self.tw_jumpListTable.item(index_r, 1).setBackground(QBrush(QColor(255, 242, 204)))
                     else:
                         self.tw_jumpListTable.item(index_r, 0).setForeground(QBrush(QColor(255, 0, 0)))
                         self.tw_jumpListTable.item(index_r, 1).setForeground(QBrush(QColor(255, 0, 0)))
@@ -100,6 +100,7 @@ class HomePageWindow(QMainWindow, Ui_Dialog):
             self.thread.start()
         else:
             msg_box = QMessageBox(QMessageBox.Warning, "错误提示", "找不到路径下的文件/文件夹")
+            msg_box.setWindowFlags(QtCore.Qt.Dialog|QtCore.Qt.WindowStaysOnTopHint)
             msg_box.exec_()
 
     @pyqtSlot()
@@ -163,6 +164,7 @@ class HomePageWindow(QMainWindow, Ui_Dialog):
                 self.SVNUpdataOrCommit(runPath, 'update')
             else:
                 msg_box = QMessageBox(QMessageBox.Warning, "提示", "找不到路径下的文件夹或不是目录，更新失败")
+                msg_box.setWindowFlags(QtCore.Qt.Dialog | QtCore.Qt.WindowStaysOnTopHint)
                 msg_box.exec_()
 
     @pyqtSlot()
@@ -175,6 +177,7 @@ class HomePageWindow(QMainWindow, Ui_Dialog):
                 self.SVNUpdataOrCommit(runPath, 'commit')
             else:
                 msg_box = QMessageBox(QMessageBox.Warning, "提示", "找不到路径下的文件夹或不是目录，提交失败")
+                msg_box.setWindowFlags(QtCore.Qt.Dialog | QtCore.Qt.WindowStaysOnTopHint)
                 msg_box.exec_()
 
     # SVN更新与提交，根据参数二决定执行类型
