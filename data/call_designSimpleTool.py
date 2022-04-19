@@ -145,11 +145,17 @@ class HomePageWindow(QMainWindow, Ui_Dialog):
     # 启动FileLocatoer并在表格文件夹[.xls]中搜索字段
     def onSearchKeyClicked(self):
         inputText = self.le_inputSearchTextEditor.text()
-        key = 'DataXLSFolder'
+        items = self.tw_jumpListTable.selectedItems()
+        if len(items) != 0 and os.path.isdir(items[1].text()):
+            searchPath = items[1].text()
+        else:
+            msg_box = QMessageBox(QMessageBox.Warning, "错误提示", "未选中目录或选中的并非文件夹")
+            msg_box.setWindowFlags(QtCore.Qt.Dialog | QtCore.Qt.WindowStaysOnTopHint)
+            msg_box.exec_()
+            return
         if inputText == "":
             searchText = 'FileLocatorPro_x86.exe'
         else:
-            searchPath = self.pathCheckAndReturn(key, 2)
             searchText = 'FileLocatorPro_x86.exe -d "%s" -c "%s"' % (searchPath, inputText)
         self.thread = RunCmdByThread(searchText)
         self.thread.start()
