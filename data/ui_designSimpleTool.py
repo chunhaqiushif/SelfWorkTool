@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui_designSimpleTool.ui'
+# Form implementation generated from reading ui file 'd:\User\Documents\GameLearning\SelfWorkTool\data\UI\ui_designSimpleTool.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -11,26 +11,26 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.setEnabled(True)
-        Dialog.resize(270, 720)
+class Ui_MainWnd(object):
+    def setupUi(self, MainWnd):
+        MainWnd.setObjectName("MainWnd")
+        MainWnd.setEnabled(True)
+        MainWnd.resize(270, 820)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
-        Dialog.setSizePolicy(sizePolicy)
-        Dialog.setMinimumSize(QtCore.QSize(270, 720))
-        Dialog.setMaximumSize(QtCore.QSize(270, 720))
+        sizePolicy.setHeightForWidth(MainWnd.sizePolicy().hasHeightForWidth())
+        MainWnd.setSizePolicy(sizePolicy)
+        MainWnd.setMinimumSize(QtCore.QSize(270, 820))
+        MainWnd.setMaximumSize(QtCore.QSize(270, 820))
         font = QtGui.QFont()
         font.setFamily("宋体")
-        Dialog.setFont(font)
+        MainWnd.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("UI/icon_designSimpleTool.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        Dialog.setWindowIcon(icon)
-        Dialog.setWindowOpacity(0.75)
-        self.verticalLayoutWidget_3 = QtWidgets.QWidget(Dialog)
+        icon.addPixmap(QtGui.QPixmap(":/icon/icon_designSimpleTool.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWnd.setWindowIcon(icon)
+        MainWnd.setWindowOpacity(0.75)
+        self.verticalLayoutWidget_3 = QtWidgets.QWidget(MainWnd)
         self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(10, 10, 251, 51))
         self.verticalLayoutWidget_3.setObjectName("verticalLayoutWidget_3")
         self.lo_searchTextInExcelData = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_3)
@@ -42,27 +42,7 @@ class Ui_Dialog(object):
         self.btn_submitToSearch = QtWidgets.QPushButton(self.verticalLayoutWidget_3)
         self.btn_submitToSearch.setObjectName("btn_submitToSearch")
         self.lo_searchTextInExcelData.addWidget(self.btn_submitToSearch)
-        self.horizontalLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 670, 251, 31))
-        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        self.lo_setting = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
-        self.lo_setting.setContentsMargins(0, 0, 0, 0)
-        self.lo_setting.setObjectName("lo_setting")
-        self.cb_topThisWindow = QtWidgets.QCheckBox(self.horizontalLayoutWidget)
-        self.cb_topThisWindow.setEnabled(True)
-        self.cb_topThisWindow.setTabletTracking(False)
-        self.cb_topThisWindow.setCheckable(True)
-        self.cb_topThisWindow.setChecked(True)
-        self.cb_topThisWindow.setObjectName("cb_topThisWindow")
-        self.lo_setting.addWidget(self.cb_topThisWindow)
-        self.btn_pathSetting = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.btn_pathSetting.setObjectName("btn_pathSetting")
-        self.lo_setting.addWidget(self.btn_pathSetting)
-        self.lb_coderSign = QtWidgets.QLabel(Dialog)
-        self.lb_coderSign.setGeometry(QtCore.QRect(10, 700, 251, 20))
-        self.lb_coderSign.setAlignment(QtCore.Qt.AlignCenter)
-        self.lb_coderSign.setObjectName("lb_coderSign")
-        self.verticalLayoutWidget_4 = QtWidgets.QWidget(Dialog)
+        self.verticalLayoutWidget_4 = QtWidgets.QWidget(MainWnd)
         self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(10, 70, 251, 61))
         self.verticalLayoutWidget_4.setObjectName("verticalLayoutWidget_4")
         self.lo_consoleCodeSearch_v = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_4)
@@ -86,13 +66,47 @@ class Ui_Dialog(object):
         self.le_consoleCodeSearchResult.setReadOnly(True)
         self.le_consoleCodeSearchResult.setObjectName("le_consoleCodeSearchResult")
         self.lo_consoleCodeSearch_v.addWidget(self.le_consoleCodeSearchResult)
-        self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 140, 251, 521))
+        self.verticalLayoutWidget = QtWidgets.QWidget(MainWnd)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 140, 251, 671))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.lo_quickJump_v = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.lo_quickJump_v.setContentsMargins(0, 0, 0, 0)
         self.lo_quickJump_v.setObjectName("lo_quickJump_v")
         self.tw_jumpListTable = QtWidgets.QTableWidget(self.verticalLayoutWidget)
+        font = QtGui.QFont()
+        font.setFamily("宋体")
+        self.tw_jumpListTable.setFont(font)
+        self.tw_jumpListTable.setMouseTracking(True)
+        self.tw_jumpListTable.setAutoFillBackground(False)
+        self.tw_jumpListTable.setStyleSheet("QTableWidget {\n"
+"    background-color: rgba(255, 255, 255, 128);\n"
+"    gridline-color: rgba(220, 220, 220, 150);\n"
+"}\n"
+"QTableWidget::item:selected {\n"
+"    background-color: rgba(0, 85, 255, 200);\n"
+"    border: 1px solid;\n"
+"    border-color: rgba(0, 85, 255, 200);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar:vertical {\n"
+"    background: transparent;\n"
+"    width: 10px; /* 可以根据需要调整滚动条宽度 */\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"    background: #aaaaaa; /* 滚动条手柄颜色，可以根据需要调整 */\n"
+"    border-radius: 2px; /* 滚动条手柄边框圆角，可以根据需要调整 */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical,\n"
+"QScrollBar::sub-line:vertical {\n"
+"    height: 0; /* 隐藏滚动条的上下按钮 */\n"
+"}\n"
+"")
+        self.tw_jumpListTable.setLineWidth(1)
+        self.tw_jumpListTable.setMidLineWidth(0)
+        self.tw_jumpListTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tw_jumpListTable.setShowGrid(True)
         self.tw_jumpListTable.setRowCount(0)
         self.tw_jumpListTable.setColumnCount(2)
@@ -107,6 +121,10 @@ class Ui_Dialog(object):
         self.tw_jumpListTable.verticalHeader().setVisible(False)
         self.tw_jumpListTable.verticalHeader().setDefaultSectionSize(20)
         self.lo_quickJump_v.addWidget(self.tw_jumpListTable)
+        self.lb_coderSign = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.lb_coderSign.setAlignment(QtCore.Qt.AlignCenter)
+        self.lb_coderSign.setObjectName("lb_coderSign")
+        self.lo_quickJump_v.addWidget(self.lb_coderSign)
         self.lo_svnConcoleTable_h = QtWidgets.QHBoxLayout()
         self.lo_svnConcoleTable_h.setObjectName("lo_svnConcoleTable_h")
         self.btn_svnUpdata = QtWidgets.QPushButton(self.verticalLayoutWidget)
@@ -128,26 +146,97 @@ class Ui_Dialog(object):
         self.btn_quickJump.setObjectName("btn_quickJump")
         self.lo_quickJumpConcole_h.addWidget(self.btn_quickJump)
         self.lo_quickJump_v.addLayout(self.lo_quickJumpConcole_h)
+        self.lo_otherTools = QtWidgets.QHBoxLayout()
+        self.lo_otherTools.setSpacing(10)
+        self.lo_otherTools.setObjectName("lo_otherTools")
+        self.btn_resCompress = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.btn_resCompress.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.btn_resCompress.setObjectName("btn_resCompress")
+        self.lo_otherTools.addWidget(self.btn_resCompress)
+        self.lo_quickJump_v.addLayout(self.lo_otherTools)
+        self.lo_setting = QtWidgets.QHBoxLayout()
+        self.lo_setting.setObjectName("lo_setting")
+        self.btn_setting = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.btn_setting.setObjectName("btn_setting")
+        self.lo_setting.addWidget(self.btn_setting)
+        self.btn_pathSetting = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.btn_pathSetting.setObjectName("btn_pathSetting")
+        self.lo_setting.addWidget(self.btn_pathSetting)
+        self.lo_quickJump_v.addLayout(self.lo_setting)
+        self.lb_logo = QtWidgets.QLabel(MainWnd)
+        self.lb_logo.setGeometry(QtCore.QRect(124, 530, 150, 150))
+        self.lb_logo.setStyleSheet("border-image: url(:/bg/LOGO.png);")
+        self.lb_logo.setText("")
+        self.lb_logo.setObjectName("lb_logo")
+        self.groupBox = QtWidgets.QGroupBox(MainWnd)
+        self.groupBox.setGeometry(QtCore.QRect(10, 820, 251, 80))
+        self.groupBox.setObjectName("groupBox")
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.groupBox)
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 10, 251, 41))
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setContentsMargins(5, 0, 5, 0)
+        self.horizontalLayout.setSpacing(10)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.btn_pathConfig = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.btn_pathConfig.setObjectName("btn_pathConfig")
+        self.horizontalLayout.addWidget(self.btn_pathConfig)
+        self.btn_consoleCode = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.btn_consoleCode.setObjectName("btn_consoleCode")
+        self.horizontalLayout.addWidget(self.btn_consoleCode)
+        self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.groupBox)
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(0, 50, 251, 21))
+        self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
+        self.horizontalLayout_2.setContentsMargins(20, 0, 0, 0)
+        self.horizontalLayout_2.setSpacing(20)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.cb_topThisWindow = QtWidgets.QCheckBox(self.horizontalLayoutWidget_2)
+        self.cb_topThisWindow.setEnabled(True)
+        self.cb_topThisWindow.setTabletTracking(False)
+        self.cb_topThisWindow.setCheckable(True)
+        self.cb_topThisWindow.setChecked(True)
+        self.cb_topThisWindow.setObjectName("cb_topThisWindow")
+        self.horizontalLayout_2.addWidget(self.cb_topThisWindow)
+        self.cb_translucentThisWindow = QtWidgets.QCheckBox(self.horizontalLayoutWidget_2)
+        self.cb_translucentThisWindow.setEnabled(True)
+        self.cb_translucentThisWindow.setTabletTracking(False)
+        self.cb_translucentThisWindow.setCheckable(True)
+        self.cb_translucentThisWindow.setChecked(True)
+        self.cb_translucentThisWindow.setObjectName("cb_translucentThisWindow")
+        self.horizontalLayout_2.addWidget(self.cb_translucentThisWindow)
+        self.lb_logo.raise_()
+        self.verticalLayoutWidget_3.raise_()
+        self.verticalLayoutWidget_4.raise_()
+        self.verticalLayoutWidget.raise_()
+        self.groupBox.raise_()
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(MainWnd)
+        QtCore.QMetaObject.connectSlotsByName(MainWnd)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, MainWnd):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "工具集"))
-        self.le_inputSearchTextEditor.setPlaceholderText(_translate("Dialog", "输入关键字在表格文件夹[.xls]中搜索..."))
-        self.btn_submitToSearch.setText(_translate("Dialog", "全局搜索 (使用FileLocator)"))
-        self.cb_topThisWindow.setText(_translate("Dialog", "窗口置顶"))
-        self.btn_pathSetting.setText(_translate("Dialog", "打开配置文件目录"))
-        self.lb_coderSign.setText(_translate("Dialog", "By Tupler. Ver 1.1"))
-        self.le_consoleCodeSearch.setPlaceholderText(_translate("Dialog", "输入关键字查询GM指令..."))
-        self.btn_consoleCodeCopy.setText(_translate("Dialog", "复制首个"))
-        self.le_consoleCodeSearchResult.setPlaceholderText(_translate("Dialog", "GM指令搜索结果显示在此处..."))
+        MainWnd.setWindowTitle(_translate("MainWnd", "工具集"))
+        self.le_inputSearchTextEditor.setPlaceholderText(_translate("MainWnd", "输入关键字在所选文件夹中搜索..."))
+        self.btn_submitToSearch.setText(_translate("MainWnd", "全局搜索 (使用FileLocator)"))
+        self.le_consoleCodeSearch.setPlaceholderText(_translate("MainWnd", "输入关键字查询GM指令..."))
+        self.btn_consoleCodeCopy.setText(_translate("MainWnd", "复制首个"))
+        self.le_consoleCodeSearchResult.setPlaceholderText(_translate("MainWnd", "GM指令搜索结果显示在此处..."))
         item = self.tw_jumpListTable.horizontalHeaderItem(0)
-        item.setText(_translate("Dialog", "名称"))
+        item.setText(_translate("MainWnd", "名称"))
         item = self.tw_jumpListTable.horizontalHeaderItem(1)
-        item.setText(_translate("Dialog", "路径"))
-        self.btn_svnUpdata.setText(_translate("Dialog", "SVN目录更新"))
-        self.btn_svnSubmit.setText(_translate("Dialog", "SVN目录提交"))
-        self.btn_quickJumpReload.setText(_translate("Dialog", "重载列表"))
-        self.btn_quickJump.setText(_translate("Dialog", "打开"))
+        item.setText(_translate("MainWnd", "路径"))
+        self.lb_coderSign.setText(_translate("MainWnd", "<html><head/><body><p align=\"center\">By Tupler.Ver 1.2<a href=\"https://github.com/chunhaqiushif/SelfWorkTool\"><span style=\" text-decoration: underline; color:#0000ff;\">[Github]</span></a></p></body></html>"))
+        self.btn_svnUpdata.setText(_translate("MainWnd", "SVN目录更新"))
+        self.btn_svnSubmit.setText(_translate("MainWnd", "SVN目录提交"))
+        self.btn_quickJumpReload.setText(_translate("MainWnd", "重载列表/GM指令"))
+        self.btn_quickJump.setText(_translate("MainWnd", "打开程序/文件夹"))
+        self.btn_resCompress.setText(_translate("MainWnd", "压缩包生成工具"))
+        self.btn_setting.setText(_translate("MainWnd", "设置 ▲"))
+        self.btn_pathSetting.setText(_translate("MainWnd", "打开工具集目录"))
+        self.groupBox.setTitle(_translate("MainWnd", "设置"))
+        self.btn_pathConfig.setText(_translate("MainWnd", "路径配置表"))
+        self.btn_consoleCode.setText(_translate("MainWnd", "GM指令编辑"))
+        self.cb_topThisWindow.setText(_translate("MainWnd", "窗口置顶"))
+        self.cb_translucentThisWindow.setText(_translate("MainWnd", "窗口透明"))
+import pictures_rc

@@ -1,1 +1,87 @@
-指令:1
+压缩包密码1:www.heimaobb.com
+压缩包密码2:
+清空背包:cbg
+citem:
+setItemDyAtt:
+setItemCust:
+getItemCust:
+生成道具:i id 数量
+传送:mv 地图索引 X Y
+生成怪物:m id 数量
+新增称号:adtt
+itemMul:
+sa:
+ga:
+学习技能:s id
+sd:
+添加等级:addLv
+减少等级:subLv
+addZLv:
+追魂:
+selfXY:
+subZLv:
+rs:
+setVar:
+getVar:
+MapItem:
+gsi:
+b:
+rebuff:
+add64:
+get64:
+clearGold:
+mail:
+mail2:
+sht:
+vipep:
+setviplevel:
+open:
+Preview:
+close:
+act:
+getRole:
+killall:
+killself:
+showF:
+genCMon:
+starwar:
+stopwar:
+delMall:
+sets:
+getcd:
+yabiao:
+esCount:
+kb:
+send:
+ssp:
+getSpe:
+rc:
+getT:
+setstarlv:
+setstarlvall:
+gslist:
+getJZ:
+getPet:
+setPet:
+clearMonster:
+enterDgn:
+jumpByLocationId:
+recharge:
+closeVip:
+findMonster:
+bag:
+amon:
+dmon:
+夺宝奇兵:rss DuoBaoQiBin.Reset
+厉兵秣马:rss CampWar.CreateDgn
+武林争霸:rss CampBattle.CreateAct
+Boss攻城:rss AttackCity.ActivityStart
+世界boss:rss WorldBoss.OpenActDgn
+武道大会:rss WuDaoDaHui.FightStart
+武道大会匹配:rss WuDaoDaHui.FightStart
+开启全部的侠客特权:openVip
+关闭所有的侠客特权:closeVip
+特权回收:rss HuiShou.OpenAll
+完成当前任务:rss Task.Finish
+返回上一个任务:rss Task.Back
+跳转到指定id的任务:rss Task.BackTo id
