@@ -2,13 +2,13 @@ import os
 import sys
 import re
 import csv
-import threading
 
 import pyperclip3
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import pyqtSlot, QUrl
-from PyQt5.QtGui import QBrush, QColor, QDesktopServices
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QTableWidgetItem, QAbstractItemView
+from PyQt5.QtCore import pyqtSlot, QUrl, Qt, QFileInfo
+from PyQt5.QtGui import QBrush, QColor, QDesktopServices, QIcon
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QTableWidgetItem, QAbstractItemView, QFileIconProvider
+import qtawesome as qta
 
 from ui_designSimpleTool import Ui_MainWnd
 from ui_res_compress import Ui_ResCompressWnd
@@ -16,6 +16,10 @@ import pictures_rc
 
 from ResourceCompressToZip import *
 import util
+
+from qtawesome.icon_browser import run
+
+#run()
 
 global GMCode
 GMCode = {}
@@ -53,31 +57,51 @@ class HomePageWindow(QMainWindow, Ui_MainWnd):
 
 
     def initUI(self):
+        self.btn_submitToSearch.setIcon(qta.icon('fa.search'))
         self.btn_submitToSearch.clicked.connect(self.onSearchKeyClicked)
+
         self.le_consoleCodeSearch.textChanged.connect(self.onGMCodeSearch)
+
+        self.btn_consoleCodeCopy.setIcon(qta.icon('fa5.copy'))
         self.btn_consoleCodeCopy.clicked.connect(self.onGMCodeCopy)
         # self.cb_topThisWindow.toggled.connect(self.onTopThisWindowClicked)
 
+        self.btn_pathSetting.setIcon(qta.icon('fa.folder-open'))
         self.btn_pathSetting.clicked.connect(self.onPathSettingClick)
+
+        self.btn_quickJumpReload.setIcon(qta.icon('fa.refresh'))
         self.btn_quickJumpReload.clicked.connect(self.onQuickJumpReloadClick)
+
+        self.btn_quickJump.setIcon(qta.icon('fa.play-circle-o'))
         self.btn_quickJump.clicked.connect(self.onQuickJumpClick)
 
         self.tw_jumpListTable.setSelectionMode(QAbstractItemView.SingleSelection)
         self.tw_jumpListTable.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.onQuickJumpReloadClick()
 
+        self.btn_svnSubmit.setIcon(qta.icon('fa.cloud-upload'))
         self.btn_svnSubmit.clicked.connect(self.onCommitDataclicked)
+
+        self.btn_svnUpdata.setIcon(qta.icon('fa.cloud-download'))
         self.btn_svnUpdata.clicked.connect(self.onUpdataDataclicked)
 
+        self.btn_setting.setIcon(qta.icon('fa.cog'))
         self.btn_setting.clicked.connect(self.onOpenSettingWndClicked)
+
+        self.btn_resCompress.setIcon(qta.icon('fa5s.file-archive'))
         self.btn_resCompress.clicked.connect(self.onOpenResCompressWndClicked)
 
         self.cb_topThisWindow.toggled.connect(self.onTopThisWindowClicked)
         self.cb_translucentThisWindow.toggled.connect(self.onTranslucentThisWndClicked)
+
+        self.btn_pathConfig.setIcon(qta.icon('fa.slack'))
         self.btn_pathConfig.clicked.connect(self.onPathConfigOpenClicked)
+
+        self.btn_consoleCode.setIcon(qta.icon('fa.slack'))
         self.btn_consoleCode.clicked.connect(self.onGMCodeFileOpenClicked)
 
         # self.tw_jumpListTable.cellEntered.connect(self.onItemEntered)
+        self.tw_jumpListTable.horizontalHeader().setSectionsMovable(False)
 
         self.lb_coderSign.linkActivated.connect(self.open_gitHub_link)
 
@@ -95,35 +119,60 @@ class HomePageWindow(QMainWindow, Ui_MainWnd):
     def onQuickJumpClick(self):
         items = self.tw_jumpListTable.selectedItems()
         if len(items) != 0:
-            self.onRunFileOrFolder(items[1].text())
+            self.onRunFileOrFolder(items[3].text())
 
 
     @pyqtSlot()
     # 刷新.加载快速跳转列表和GM指令
     def onQuickJumpReloadClick(self):
+        # 读取
         JumpListFile = open('config/dirlist.csv', 'r')
         read = csv.reader(JumpListFile)
         read_row = len(list(read))
         JumpListFile.seek(0)
         self.tw_jumpListTable.setRowCount(read_row)
-        self.tw_jumpListTable.setColumnCount(2)
+        self.tw_jumpListTable.setColumnCount(4)
+        # 置入信息和数据
         for index_r, valueList in enumerate(read):
             for index_c, value in enumerate(valueList):
                 qtw_value = QTableWidgetItem(value)
-                self.tw_jumpListTable.setItem(index_r, index_c, qtw_value)
-                # 根据类型上色
-                if index_c == 1:
+                if index_c == 0:
+                    qtw_value.setTextAlignment(Qt.AlignCenter)
+                    self.tw_jumpListTable.setItem(index_r, 2, qtw_value)
+                elif index_c == 1:
+                    self.tw_jumpListTable.setItem(index_r, 1, qtw_value)      
+                elif index_c == 2:
+                    self.tw_jumpListTable.setItem(index_r, 3, qtw_value)
                     if os.path.isfile(qtw_value.text()):
-                        self.tw_jumpListTable.item(index_r, 0).setBackground(QBrush(QColor(221, 235, 247, 200)))
-                        self.tw_jumpListTable.item(index_r, 1).setBackground(QBrush(QColor(221, 235, 247, 200)))
+                        file_icon = util.get_file_icon(qtw_value.text())
+                        item = QTableWidgetItem()
+                        item.setIcon(file_icon)
+                        item.setTextAlignment(Qt.AlignVCenter)
+                        self.tw_jumpListTable.setItem(index_r, 0, item)
                     elif os.path.isdir(qtw_value.text()):
-                        self.tw_jumpListTable.item(index_r, 0).setBackground(QBrush(QColor(255, 242, 204, 200)))
-                        self.tw_jumpListTable.item(index_r, 1).setBackground(QBrush(QColor(255, 242, 204, 200)))
+                        folder_icon = QFileIconProvider().icon(QFileIconProvider.Folder)
+                        item = QTableWidgetItem()
+                        item.setIcon(folder_icon)
+                        item.setTextAlignment(Qt.AlignVCenter)
+                        self.tw_jumpListTable.setItem(index_r, 0, item)
                     else:
                         self.tw_jumpListTable.item(index_r, 0).setForeground(QBrush(QColor(255, 0, 0, 250)))
                         self.tw_jumpListTable.item(index_r, 1).setForeground(QBrush(QColor(255, 0, 0, 250)))
-        self.tw_jumpListTable.resizeColumnToContents(0)
+                        self.tw_jumpListTable.item(index_r, 2).setForeground(QBrush(QColor(255, 0, 0, 250)))
+                elif index_c == 3:
+                    rgb_values = util.hex_to_rgb(qtw_value.text())
+                    for col in range(self.tw_jumpListTable.columnCount()):
+                        self.tw_jumpListTable.item(index_r, col).setBackground(QBrush(QColor(rgb_values[0],rgb_values[1],rgb_values[2],200)))
+          
 
+        # 调整表格列宽
+        self.tw_jumpListTable.resizeColumnToContents(1)
+        self.tw_jumpListTable.setColumnWidth(0, 24)
+        # self.tw_jumpListTable.resizeColumnToContents(2)
+        avg_width = 250
+        self.tw_jumpListTable.setColumnWidth(2, avg_width - self.tw_jumpListTable.columnWidth(1) - 25)
+        
+        # 重载GM指令文本文档的载入
         initGMCode()
 
 
@@ -135,13 +184,6 @@ class HomePageWindow(QMainWindow, Ui_MainWnd):
             self.thread.start()
         else:
             util.warningMsgBox("提示", "找不到路径下的文件/文件夹")
-
-
-    @pyqtSlot()
-    # 启动批处理文件（用于新开cmd窗口启动服务器）
-    def onRunBat(self, key):
-        runPath = self.pathCheckAndReturn(key, 3)
-        util.RunCmdByThread(runPath)
 
 
     @pyqtSlot()
@@ -209,7 +251,7 @@ class HomePageWindow(QMainWindow, Ui_MainWnd):
     def onUpdataDataclicked(self):
         items = self.tw_jumpListTable.selectedItems()
         if not len(items) == 0:
-            runPath = items[1].text()
+            runPath = items[3].text()
             if os.path.exists(runPath) and os.path.isdir(runPath):
                 self.SVNUpdataOrCommit(runPath, 'update')
             else:
@@ -221,7 +263,7 @@ class HomePageWindow(QMainWindow, Ui_MainWnd):
     def onCommitDataclicked(self):
         items = self.tw_jumpListTable.selectedItems()
         if not len(items) == 0:
-            runPath = items[1].text()
+            runPath = items[3].text()
             if os.path.exists(runPath) and os.path.isdir(runPath):
                 self.SVNUpdataOrCommit(runPath, 'commit')
             else:
@@ -235,16 +277,6 @@ class HomePageWindow(QMainWindow, Ui_MainWnd):
         consoleText_2ndPart = '& TortoiseProc.exe /command:%s /path:"." /closeonend:0' % operateCommand
         consoleText = consoleText_1stPart + consoleText_2ndPart
         self.thread = util.RunCmdByThread(consoleText)
-        self.thread.start()
-
-
-    # Git更新与提交，根据参数二决定执行类型
-    def GitUpdataOrCommit(self, runPath, operateCommand):
-        drive = runPath.split(":", 1)[0]  # 获取盘符
-        consoleText_1stPart = '%s: & cd %s & setlocal enabledelayedexpansion' % (drive, runPath)  # 拼接指令
-        consoleText_2ndPart = '& TortoiseGitProc.exe /command:%s /path:"."' % operateCommand
-        consoleText = consoleText_1stPart + consoleText_2ndPart
-        self.thread = RunCmdByThread(consoleText)
         self.thread.start()
 
 
@@ -364,12 +396,24 @@ class ResCompressPageWnd(QMainWindow, Ui_ResCompressWnd):
 
 
     def initUI(self):
+        self.btn_zip_folder.setIcon(qta.icon('fa.folder-open'))
         self.btn_zip_folder.clicked.connect(lambda: self.onZipFolderButtonClicked())
+
+        self.btn_log_folder.setIcon(qta.icon('fa.folder-open'))
         self.btn_log_folder.clicked.connect(lambda: self.onLogFolderButtonClicked())
+
+        self.btn_path_config.setIcon(qta.icon('fa.slack'))
         self.btn_path_config.clicked.connect(lambda: self.onZipConfButtonClicked())
+
+        self.btn_config_refresh.setIcon(qta.icon('fa.refresh'))
         self.btn_config_refresh.clicked.connect(self.onConfRefreshButtonClicked)
+
+        self.btn_compress.setIcon(qta.icon('fa5s.file-archive'))
         self.btn_compress.clicked.connect(self.onResourceCompressButtonClicked)
+
+        self.btn_clr_output.setIcon(qta.icon('fa5s.remove-format'))
         self.btn_clr_output.clicked.connect(self.onClearOutputPrintButtonClicked)
+
         self.cb_0_0.toggled.connect(lambda: self.onToggleChecked(1,self.cb_0_0))
         self.cb_0_1.toggled.connect(lambda: self.onToggleChecked(2,self.cb_0_1))
         self.cb_0_2.toggled.connect(lambda: self.onToggleChecked(3,self.cb_0_2))

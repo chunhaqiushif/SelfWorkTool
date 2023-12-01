@@ -3,8 +3,9 @@ import pandas as pd
 import os
 import shutil
 from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtWidgets import QMessageBox, QFileIconProvider
+from PyQt5.QtCore import QThread, pyqtSignal, QFileInfo
+from PyQt5.QtGui import QIcon 
 import subprocess
 
 
@@ -65,6 +66,23 @@ def warningMsgBox(title, msg, wndAlpha = 1):
 def get_time_token():
     time_token = time.strftime('[%H:%M:%S]', time.localtime(time.time()))
     return time_token
+
+
+# 获取文件icon
+def get_file_icon(path):
+    provider = QFileIconProvider()
+    info = QFileInfo(path)
+    icon = QIcon(provider.icon(info))
+    return icon
+
+
+# 颜色代码转RGB
+def hex_to_rgb(hex_color):
+    hex_color = hex_color.lstrip('#')  # 去除可能的 '#' 前缀
+    r = int(hex_color[0:2], 16)
+    g = int(hex_color[2:4], 16)
+    b = int(hex_color[4:6], 16)
+    return r, g, b
 
 
 # 使用线程启动文件或打开文件夹

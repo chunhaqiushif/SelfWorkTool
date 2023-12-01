@@ -50,30 +50,30 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QPushButton" name="btn_log_folder">
-      <property name="text">
-       <string>打开日志目录</string>
-      </property>
-     </widget>
-    </item>
-    <item>
      <widget class="QPushButton" name="btn_path_config">
       <property name="text">
-       <string>路径配置文件</string>
+       <string>路径配置</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="btn_config_refresh">
       <property name="text">
-       <string>刷新配置表</string>
+       <string>刷新配置</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="btn_clr_output">
       <property name="text">
-       <string>清空导出日志</string>
+       <string>清空打印</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btn_log_folder">
+      <property name="text">
+       <string>日志目录</string>
       </property>
      </widget>
     </item>
@@ -99,7 +99,7 @@
     <item>
      <widget class="QPushButton" name="btn_zip_folder">
       <property name="text">
-       <string>打开导出目录</string>
+       <string>导出目录</string>
       </property>
      </widget>
     </item>
