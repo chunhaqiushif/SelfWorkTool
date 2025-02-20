@@ -1,0 +1,60 @@
+[
+    {
+        "tab_text": "默认1",
+        "list": [
+            {
+                "name": "文件夹1",
+                "path": "D:/Program Files",
+                "bg_color": "#DDEBF7",
+                "des": "[文件夹]"
+            },
+            {
+                "name": "文件2",
+                "path": "D:/User/Desktop/test.jpg",
+                "bg_color": "#E1F2CC",
+                "des": "[不存在的文件]"
+            },
+            {
+                "name": "文件夹2",
+                "path": "G:/",
+                "bg_color": "#E1F2CC",
+                "des": "[不存在的文件夹]"
+            },
+            {
+                "name": "文件",
+                "path": "D:/BlenderData/Board.blend",
+                "bg_color": "#E1F2CC",
+                "des": "[文件]"
+            }
+        ]
+    },
+    {
+        "tab_text": "默认2",
+        "list": [
+            {
+                "name": "文件夹111111111111111",
+                "path": "D:/Program Files",
+                "bg_color": "#DDEBF7",
+                "des": "[文件夹]"
+            },
+            {
+                "name": "文件2",
+                "path": "D:/User/Desktop/test.jpg",
+                "bg_color": "#E1F2CC",
+                "des": "[不存在的文件]"
+            },
+            {
+                "name": "文件夹2",
+                "path": "G:/",
+                "bg_color": "#E1F2CC",
+                "des": "[不存在的文件夹]"
+            },
+            {
+                "name": "文件",
+                "path": "D:/BlenderData/Board.blend",
+                "bg_color": "#E1F2CC",
+                "des": "[文件]"
+            }
+        ]
+    }
+]
